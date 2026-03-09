@@ -1,0 +1,46 @@
+## Visual Studio ##
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+## Build ##
+[Dd]ebug/
+[Rr]elease/
+[Bb]in/
+[Oo]bj/
+[Oo]ut/
+[Ll]og/
+[Ll]ogs/
+*.dll
+*.exe
+*.pdb
+
+## NuGet ##
+*.nupkg
+*.snupkg
+project.lock.json
+packages/
+.nuget/
+
+## Publicação ##
+[Pp]ublish/
+PublishProfiles/
+
+## Rider / JetBrains ##
+.idea/
+*.DotSettings.user
+
+## Cobertura de testes ##
+TestResults/
+coverage/
+*.coverage
+*.coveragexml
+
+## OS ##
+.DS_Store
+Thumbs.db
+
+## SQLite ##
+*.s3db-journal

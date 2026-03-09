@@ -4,6 +4,7 @@ using CaseItau.Domain.Extensions;
 using CaseItau.Domain.Interfaces.Repositories;
 using CaseItau.Domain.ValueObjects;
 using FluentValidation;
+using FluentValidation.Results;
 using MediatR;
 
 namespace CaseItau.Application.Commands.UpdateFund;
@@ -25,7 +26,7 @@ public class UpdateFundCommandHandler(IFundRepository fundRepository, IFundTypeR
             throw new ConflictException($"Já existe um fundo com este CNPJ. ({request.Document})");
 
         if (!await _fundTypeRepository.CheckIfExistsById(request.FundType, cancellationToken))
-            throw new ValidationException($"Tipo de fundo inválido. ({request.FundType})");
+            throw new ValidationException([new ValidationFailure("FundType", $"Tipo de fundo inválido. ({request.FundType})")]);
 
         fund.Update(request.Name, Document.Create(request.Document), request.FundType);
         await _fundRepository.Update(fund, cancellationToken);

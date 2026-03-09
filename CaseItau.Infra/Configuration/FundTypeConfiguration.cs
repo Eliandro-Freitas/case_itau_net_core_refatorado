@@ -21,8 +21,5 @@ public class FundTypeMap : IEntityTypeConfiguration<FundType>
             .IsRequired()
             .HasMaxLength(20);
 
-        builder.HasMany(x => x.Funds)
-            .WithOne(x => x.FundType)
-            .HasForeignKey(x => x.FundTypeId);
     }
 }

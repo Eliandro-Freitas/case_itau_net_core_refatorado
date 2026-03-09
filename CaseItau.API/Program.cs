@@ -1,21 +1,22 @@
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
+using CaseItau.API.Middlewares;
+using CaseItau.Application.DependenceInjections;
+using CaseItau.Infrastructure.DependenceInjections;
+using Scalar.AspNetCore;
 
-namespace CaseItau.API;
+var builder = WebApplication.CreateBuilder(args);
 
-public class Program
-{
-    public static void Main(string[] args)
-    {
-        CreateHostBuilder(args)
-            .Build()
-            .Run();
-    }
+builder.Services.AddControllers();
+builder.Services.AddInfrastructure();
+builder.Services.AddApplication();
+builder.Services.AddOpenApi();
 
-    public static IHostBuilder CreateHostBuilder(string[] args) =>
-        Host.CreateDefaultBuilder(args)
-            .ConfigureWebHostDefaults(webBuilder =>
-            {
-                webBuilder.UseStartup<Startup>();
-            });
-}
+var app = builder.Build();
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
+app.UseHttpsRedirection();
+app.UseAuthorization();
+app.MapControllers();
+app.MapOpenApi();
+app.MapScalarApiReference();
+
+app.Run();
